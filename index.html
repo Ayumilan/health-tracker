@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Health Tracker</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f7f6; padding: 20px; display: flex; justify-content: center; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); width: 100%; max-width: 400px; }
+        h2 { margin-top: 0; color: #333; text-align: center; }
+        label { font-weight: bold; display: block; margin: 15px 0 5px; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        .row { display: flex; gap: 10px; }
+        button { width: 100%; background: #28a745; color: white; border: none; padding: 12px; margin-top: 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:disabled { background: #ccc; }
+        #status { text-align: center; margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
 
+<div class="card">
+    <h2>❤️ Family Health Logger</h2>
+    <form id="healthForm">
+        <label>Name</label>
+        <select id="name" required>
+            <option value="">Select Member</option>
+            <option value="Father">Father</option>
+            <option value="Mother">Mother</option>
+            <option value="Me">Me</option>
+        </select>
+
+        <label>Blood Pressure (SYS/DIA)</label>
+        <div class="row">
+            <input type="number" id="systolic" placeholder="Top (e.g. 120)">
+            <input type="number" id="diastolic" placeholder="Bottom (e.g. 80)">
+        </div>
+
+        <label>Sugar Level (mg/dL)</label>
+        <input type="number" id="sugar" placeholder="e.g. 100">
+
+        <label>Notes (Optional)</label>
+        <input type="text" id="notes" placeholder="Before breakfast, post-walk, etc.">
+
+        <button type="submit" id="submitBtn">Save Readings</button>
+    </form>
+    <div id="status"></div>
+</div>
+
+<script>
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbxhAyJI2a99Iif8j8jcXoklS5YaXKp3040Y0c0IvgtsVRjiivHXYzhyjZmV2j9nqCDUOA/exec'; 
+
+    document.getElementById('healthForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('submitBtn');
+        const status = document.getElementById('status');
+        
+        btn.disabled = true;
+        status.style.color = '#333';
+        status.innerText = 'Saving data...';
+
+        const payload = {
+            name: document.getElementById('name').value,
+            systolic: document.getElementById('systolic').value || 'N/A',
+            diastolic: document.getElementById('diastolic').value || 'N/A',
+            sugar: document.getElementById('sugar').value || 'N/A',
+            notes: document.getElementById('notes').value
+        };
+
+        fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors', // Solves cross-origin blocks for basic submissions
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            status.style.color = 'green';
+            status.innerText = '✅ Saved successfully!';
+            document.getElementById('healthForm').reset();
+            btn.disabled = false;
+        })
+        .catch(err => {
+            status.style.color = 'red';
+            status.innerText = '❌ Error saving data.';
+            console.error(err);
+            btn.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
