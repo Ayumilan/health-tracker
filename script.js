@@ -1,6 +1,6 @@
 // Replace this URL with your deployed Google Apps Script Web App URL
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+  "https://script.google.com/macros/s/AKfycbyrrhkIiBkPfjw_zx2BaNgMNV2zKFXlbPEpiULWQlWbHsFIr71d9ph8FDZNszkonnMJFQ/exec";
 
 const form = document.getElementById("healthForm");
 const message = document.getElementById("message");
