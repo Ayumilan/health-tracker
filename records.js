@@ -1,5 +1,5 @@
 const SCRIPT_URL =
-  "YOUR_APPS_SCRIPT_WEB_APP_URL";
+  "https://script.google.com/macros/s/AKfycbyrrhkIiBkPfjw_zx2BaNgMNV2zKFXlbPEpiULWQlWbHsFIr71d9ph8FDZNszkonnMJFQ/exec";
 
 async function loadRecords() {
   try {
