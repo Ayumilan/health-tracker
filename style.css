@@ -98,3 +98,32 @@ button[type="reset"]:hover {
     flex-direction: column;
   }
 }
+
+.view-btn {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  text-decoration: none;
+  background: #007bff;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background: #f2f2f2;
+}
